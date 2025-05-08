@@ -1,5 +1,8 @@
-TH1D* get_average_ac_for_file(TString diagfile){
 
+TH1D* get_average_ac_for_file(TString diagfile){
+    /*
+    Get average autocorrelation histogram from a file
+    */
 
     TFile *fin = new TFile(diagfile, "open");
 

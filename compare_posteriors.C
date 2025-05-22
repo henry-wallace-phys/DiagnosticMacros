@@ -78,17 +78,20 @@ TH1D* get_hist_from_ttree(TTree* tree, TString branch_name, TString tree_label, 
   }
 
   //  h->SetFillColorAlpha(kWhite, 0.0);
-  h->Scale(1/static_cast<double>(tree->GetEntries()));
+  h->Scale(1/h->Integral());
   return h;
 }
 
 // Simple script to compare traces
 void compare_posteriors(TString file_1_name, TString file_1_lab, bool file_1_nova, TString file_2_name, TString file_2_lab, bool file_2_nova, TString output="posteriors_comp.pdf"){
-  auto file_1_posteriors = get_posterior_tree(file_1_name);
+  auto file_1_posteriors = get_posterior_tree(file_1_name);  
   auto file_2_posteriors = get_posterior_tree(file_2_name);
+
+
 
   TCanvas* c = new TCanvas("c", "c");
   c->Draw();
+
 
   c->cd();
 

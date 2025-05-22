@@ -95,7 +95,7 @@ namespace AutoCorrelationPlotter
             band->SetPointError(i, 0, 0, (ymax[i] - ymin[i]) / 2.0, (ymax[i] - ymin[i]) / 2.0);
         }
 
-        band->SetFillColorAlpha(color, 0.3);
+        band->SetFillColorAlpha(color, 0.2);
         band->SetLineColor(color);
         band->SetLineWidth(1);
 
@@ -356,18 +356,18 @@ namespace AutoCorrelationPlotter
         const int color2 = kOrange + 7;
 
         hist1->SetLineColor(color1);
-        hist1->SetLineWidth(2);
+        hist1->SetLineWidth(1);
         hist1->SetTitle("Average Autocorrelation Comparison");
         hist1->GetXaxis()->SetTitle("Lag");
         hist1->GetYaxis()->SetTitle("Autocorrelation");
 
         std::unique_ptr<TH1D> error_band1(static_cast<TH1D *>(hist1->Clone()));
-        error_band1->SetFillColorAlpha(color1, 0.4);
+        error_band1->SetFillColorAlpha(color1, 0.3);
 
         hist2->SetLineColor(color2);
         hist2->SetLineWidth(2);
         std::unique_ptr<TH1D> error_band2(static_cast<TH1D *>(hist2->Clone()));
-        error_band2->SetFillColorAlpha(color2, 0.4);
+        error_band2->SetFillColorAlpha(color2, 0.3);
 
         // Create legend
         std::unique_ptr<TLegend> legend(new TLegend(0.6, 0.7, 0.9, 0.9));
@@ -406,8 +406,9 @@ namespace AutoCorrelationPlotter
             error_band1->Draw("E3 same");
             error_band2->Draw("E3 same");
         }
-        hist1->Draw("L same"); // Redraw to be on top
-        hist2->Draw("L same");
+
+        hist1->Draw("l hist same"); // Redraw to be on top
+        hist2->Draw("l hist same");
 
         if (show_all_histograms)
         {
@@ -415,13 +416,13 @@ namespace AutoCorrelationPlotter
             {
                 hist->SetLineColorAlpha(color1, 0.1);
                 hist->SetLineWidth(1);
-                hist->Draw("L same");
+                hist->Draw("l same");
             }
             for (auto hist : histograms2)
             {
                 hist->SetLineColorAlpha(color2, 0.1);
                 hist->SetLineWidth(1);
-                hist->Draw("L same");
+                hist->Draw("l same");
             }
         }
 

@@ -31,7 +31,6 @@ void plot_diag_comp(TString input_file_1, TString file_1_label, TString input_fi
     p2->Draw();
     c->Print(output+".pdf[");
 
-
     std::cout<<"Beginning loop!"<<std::endl;
     while( (key = (TKey*) next()))
     {
@@ -42,20 +41,26 @@ void plot_diag_comp(TString input_file_1, TString file_1_label, TString input_fi
         TH1D* trace_1hist=(TH1D*)trace_1->Get(trace_1_syst.c_str());
         TH1D* autohist_1=(TH1D*)autor_1->Get(auto_syst_1.c_str());
 
-        TH2D* trace_2hist=(TH2D*)trace_2->Get(trace_1_syst.c_str());
-        TH2D* autohist_2=(TH2D*)autor_2->Get(auto_syst_1.c_str());
+        TH1D* trace_2hist=(TH1D*)trace_2->Get(trace_1_syst.c_str());
+        TH1D* autohist_2=(TH1D*)autor_2->Get(auto_syst_1.c_str());
 
         autohist_1->SetNdivisions(5);
         autohist_2->SetNdivisions(5);
 
         trace_2hist->SetNdivisions(5);
 
+        int rebinFactor = 1000; // Adjust this value as needed
+        trace_1hist->Rebin(rebinFactor);
+        trace_1hist->Scale(1.0/float(rebinFactor));
+        trace_2hist->Rebin(rebinFactor); 
+        trace_2hist->Scale(1.0/float(rebinFactor));
 
         trace_1hist->SetLineColorAlpha(kAzure-2, 0.5);
         autohist_1->SetLineColor(kAzure-2);
 
         trace_2hist->SetLineColorAlpha(kOrange+7, 0.5);
         autohist_2->SetLineColor(kOrange+7);
+
 
         TLegend* leg = new TLegend(0.6, 0.6, 0.9, 0.9);
         leg->AddEntry(autohist_1, file_1_label);
